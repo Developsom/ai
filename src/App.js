@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import './App.css';
 import ChatLog from './components/ChatLog';
 import MessageInput from './components/MessageInput';
-import dotenv from 'dotenv';
 
-dotenv.config();
+const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
 
 function App() {
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSendMessage = async (message) => {
+    console.log(process.env.REACT_APP_OPENAI_API_KEY);
     setMessages([...messages, { text: message, isUser: true }]);
     setIsLoading(true);
     try {
@@ -18,7 +18,7 @@ function App() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
+          'Authorization': `Bearer ${apiKey}`,
         },
         body: JSON.stringify({
           prompt: message,
@@ -53,3 +53,4 @@ function App() {
 }
 
 export default App;
+
